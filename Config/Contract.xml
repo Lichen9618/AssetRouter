@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Contract>
+  <ContractName>SwapRouter</ContractName>
+  <ContractHash>5ea2866235ab389fdd44017059eac95ca9e247aa</ContractHash>
+  <FunctionName>getAmountsOut</FunctionName>
+</Contract>
