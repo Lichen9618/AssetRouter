@@ -86,6 +86,8 @@ namespace DirectedGraph
             }
         }
 
+
+
         /// <summary>
         /// Retrieves the <see cref="LinkedListItem"/> at the specified index.
         /// </summary>
@@ -229,6 +231,15 @@ namespace DirectedGraph
                 first = null;
             length--;
             return obj;
+        }
+
+        public bool Contains(T obj) 
+        {
+            foreach (var T in this) 
+            {
+                if (obj.Equals(T)) return true;
+            }
+            return false;
         }
 
         /// <summary>

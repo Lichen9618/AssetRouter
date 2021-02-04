@@ -1,19 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <AllPair>
   <Pair>
-    <Start></Start>
-    <End></End>
-  </Pair>  
-  <Pair>
-    <Start></Start>
-    <End></End>
+    <Start>nNEO</Start>
+    <End>pnUSDT</End>
   </Pair>
   <Pair>
-    <Start></Start>
-    <End></End>
+    <Start>pnUSDT</Start>
+    <End>nNEO</End>
   </Pair>
   <Pair>
-    <Start></Start>
-    <End></End>
+    <Start>pnWBTC</Start>
+    <End>pnUSDT</End>
+  </Pair>
+  <Pair>
+    <Start>pnUSDT</Start>
+    <End>pnWBTC</End>
+  </Pair>
+  <Pair>
+    <Start>FLM</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>FLM</End>
+  </Pair>
+  <Pair>
+    <Start>pnWETH</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>pnWETH</End>
+  </Pair>
+  <Pair>
+    <Start>pONT</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>pONT</End>
+  </Pair>
+  <Pair>
+    <Start>pnWBTC</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>pnWBTC</End>
+  </Pair>
+  <Pair>
+    <Start>SWTH</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>SWTH</End>
   </Pair>
 </AllPair>

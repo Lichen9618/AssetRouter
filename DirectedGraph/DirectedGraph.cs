@@ -172,6 +172,12 @@ namespace DirectedGraph
 
             foreach (Node<T, W> adjacentNode in node.AdjacentNodes)
             {
+
+                if (searchResults.Peek().Contains(adjacentNode))                 
+                {
+                    //路过重复节点，跳出循环
+                    continue;
+                }
                 // Add node to search result
                 searchResults.Peek().Push(adjacentNode); // add node
                 searchResults.Peek()[0].Weight = (dynamic)searchResults.Peek()[0].Weight + adjacentNode.Weight;
@@ -179,6 +185,7 @@ namespace DirectedGraph
                 // Continue search
                 bool continueSearch = true;
                 int length = searchResults.Peek().Length;
+
 
                 if (depth != 0 && length > depth + 1)
                 {

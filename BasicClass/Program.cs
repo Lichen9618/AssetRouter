@@ -4,6 +4,8 @@ using RPCQuery;
 using RPCQuery.RPCHelper;
 using Config;
 using Newtonsoft.Json;
+using SystemLink = System.Collections.Generic;
+
 
 namespace BasicClass
 {
@@ -15,76 +17,61 @@ namespace BasicClass
             var assetList = config.GetAllAsset();
             var CallContract = config.GetCallContract();
             var SwapPairs = config.GetAllSwapPair();
-            #region Json构造
-            //TypeNValue obj1 = new TypeNValue()
-            //{
-            //    type = "Hash160",
-            //    value = "f46719e2d16bf50cddcef9d4bbfece901f73cbb6"
-            //};
-            //TypeNValue obj2 = new TypeNValue()
-            //{
-            //    type = "Hash160",
-            //    value = "282e3340d5a1cd6a461d5f558d91bc1dbc02a07b"
-            //};
-            //TypeNValue obj3 = new TypeNValue()
-            //{
-            //    type = "Hash160",
-            //    value = "534dcac35b0dfadc7b2d716a7a73a7067c148b37"
-            //};
-            //TypeNValue obj4 = new TypeNValue()
-            //{
-            //    type = "Hash160",
-            //    value = "f46719e2d16bf50cddcef9d4bbfece901f73cbb6"
-            //};
-            //TypeNValue objs = new TypeNValue()
-            //{
-            //    type = "Array",
-            //    value = new TypeNValue[] { obj1,obj2,obj3,obj4 }
-            //};
-            //var Lists = new System.Collections.Generic.List<TypeNValue>()
-            //{
-            //    new TypeNValue()
-            //    {
-            //        type = "Integer",
-            //        value = 100000000
-            //    },
-            //    objs
-            //};
-            //object[] parameters = new object[]
-            //{
-            //    "5ea2866235ab389fdd44017059eac95ca9e247aa",
-            //    "getAmountsOut",
-            //    Lists
-            //};
-
-            //QueryParams queryParams = new QueryParams()
-            //{
-            //    jsonrpc = "2.0",
-            //    method = "invokefunction",
-            //    @params = parameters,
-            //    id = 3
-            //};
-
-            //string queryJson = JsonConvert.SerializeObject(queryParams);
-            //Console.WriteLine(queryJson);
-            //string queryResult = SwapCheck.SwapQuery(queryJson);
-
-            //var test = JsonConvert.DeserializeObject<ResponseParams>(queryResult);
-            #endregion
-
-            #region Graph绘制
-            //DirectedGraph<string, int> graph = new DirectedGraph<string, int>();
-            //graph.AddEdge("FLM", "NEO", 1);
-            //graph.AddEdge("NEO", "BTC", 1);
-
-            //graph.AddEdge("NEO", "USDT", 1);
-
-            //graph.AddEdge("FLM", "USDT", 1);
-            //graph.AddEdge("USDT", "BTC", 2);
-            //graph.AddEdge("NEO", "ETH", 1);
-            //LinkedList<LinkedList<Node<string, int>>> results = graph.Search("NEO", "BTC");
-            //printResults("A-B (Depth <= 1)", results);
-            #endregion
+            DirectedGraph<string, int> graph = new DirectedGraph<string, int>();
+            foreach (var pair in SwapPairs) 
+            {
+                graph.AddEdge(pair.StartAsset.AssetName, pair.EndAsset.AssetName, 1);
+            }
+            Console.WriteLine("Start Asset: ");
+            string startAsset = Console.ReadLine();
+            Console.WriteLine("End Asset: ");
+            string endAsset = Console.ReadLine();
+            LinkedList<LinkedList<Node<string, int>>> results = graph.Search(startAsset, endAsset);
+            foreach (LinkedList<Node<string, int>> path in results) 
+            {
+                //对每一条path进行一条rpc查询
+                SystemLink.List<TypeNValue> AssetPath = new SystemLink.List<TypeNValue>();
+                foreach(Node<string, int> Asset in path) 
+                {
+                    AssetPath.Add(new TypeNValue()
+                    {
+                        type = "Hash160",
+                        value = assetList.Find( T => T.AssetName.Equals(Asset.Value)).AssetHash
+                    });
+                }
+                TypeNValue objs = new TypeNValue()
+                {
+                    type = "Array",
+                    value = AssetPath.ToArray()
+                };
+                var Lists = new SystemLink.List<TypeNValue>()
+                {
+                    new TypeNValue()
+                    {
+                        type = "Integer",
+                        value = 100000000
+                    },
+                    objs
+                };
+                object[] parameters = new object[]
+                {
+                    "5ea2866235ab389fdd44017059eac95ca9e247aa",
+                    "getAmountsOut",
+                    Lists
+                };
+                QueryParams queryParams = new QueryParams()
+                {
+                    jsonrpc = "2.0",
+                    method = "invokefunction",
+                    @params = parameters,
+                    id = 3
+                };
+                string queryJson = JsonConvert.SerializeObject(queryParams);
+                string rawQueryResult = SwapCheck.SwapQuery(queryJson);
+                var queryResult = JsonConvert.DeserializeObject<ResponseParams>(rawQueryResult);
+                TypeNValue[] typeNValues = queryResult.result.stack;
+                Console.WriteLine("Result: " + typeNValues[typeNValues.Length - 1]);
+            }
             Console.ReadLine();
         }
     }

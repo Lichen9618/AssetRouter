@@ -4,4 +4,28 @@
     <AssetName>nNEO</AssetName>
     <AssetHash>f46719e2d16bf50cddcef9d4bbfece901f73cbb6</AssetHash>
   </Asset>
+  <Asset>
+    <AssetName>pnWETH</AssetName>
+    <AssetHash>0df563008be710f3e0130208f8adc95ed7e5518d</AssetHash>
+  </Asset>
+  <Asset>
+    <AssetName>pONT</AssetName>
+    <AssetHash>c277117879af3197fbef92c71e95800aa3b89d9a</AssetHash>
+  </Asset>
+  <Asset>
+    <AssetName>pnUSDT</AssetName>
+    <AssetHash>282e3340d5a1cd6a461d5f558d91bc1dbc02a07b</AssetHash>
+  </Asset>
+  <Asset>
+    <AssetName>pnWBTC</AssetName>
+    <AssetHash>534dcac35b0dfadc7b2d716a7a73a7067c148b37</AssetHash>
+  </Asset>
+  <Asset>
+    <AssetName>FLM</AssetName>
+    <AssetHash>4d9eab13620fe3569ba3b0e56e2877739e4145e3</AssetHash>
+  </Asset>
+  <Asset>
+    <AssetName>SWTH</AssetName>
+    <AssetHash>3e09e602eeeb401a2fec8e8ea137d59aae54a139</AssetHash>
+  </Asset>
 </AllAsset>

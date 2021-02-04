@@ -8,5 +8,10 @@ namespace RPCQuery
     {
         public string type;
         public object value;
+
+        public override string ToString() 
+        {
+            return "Type: " + type + "Value: " + value;
+        }
     }
 }
