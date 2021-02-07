@@ -87,7 +87,6 @@ namespace WebAPIService.Controllers
                 if (typeNValues.Length == 0) continue;
                 var result = (typeNValues[typeNValues.Length - 1].ToString());
                 TypeNValue[] assetAmounts = JsonConvert.DeserializeObject<TypeNValue[]>(result);
-                Console.WriteLine("------------------Result----------------------");
                 List<long> onePathAmountsResult = new List<long>();
                 foreach (TypeNValue assetAmount in assetAmounts)
                 {
