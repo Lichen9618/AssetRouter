@@ -11,7 +11,7 @@ namespace RPCQuery
 
         public override string ToString() 
         {
-            return "Type: " + type + "Value: " + value;
+            return value.ToString();
         }
     }
 }

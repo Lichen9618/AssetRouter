@@ -95,7 +95,7 @@ namespace DirectedGraph
     /// </summary>
     /// <typeparam name="T">The type of value object stored in the nodes of this graph.</typeparam>
     /// <typeparam name="W">The type of weight object stored in the nodes of this graph.</typeparam>
-    public class DirectedGraph<T, W>
+    public class Graph<T, W>
     {
         // List of nodes
         LinkedList<Node<T, W>> nodes = new LinkedList<Node<T, W>>();

@@ -1,42 +1,56 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Config;
 using DirectedGraph;
 using RPCQuery;
 using RPCQuery.RPCHelper;
-using Config;
 using Newtonsoft.Json;
-using SystemLink = System.Collections.Generic;
 
-
-namespace BasicClass
+namespace WebAPIService.Controllers
 {
-    class Program
+    [ApiController]
+    [Route("[controller]")]
+    public class AssetQueryController : ControllerBase
     {
-        static void Main(string[] args)
+        private readonly ILogger<AssetQueryController> _logger;
+
+        public AssetQueryController(ILogger<AssetQueryController> logger)
         {
+            _logger = logger;
+        }
+
+        [HttpPost]
+        public string AssetPathQuery(string StartAsset, string EndAsset, int amount)
+        {
+            List<AssetQuery> FinalQueryResult = new List<AssetQuery>();
+
             ConfigReader config = new ConfigReader();
             var assetList = config.GetAllAsset();
             var CallContract = config.GetCallContract();
             var SwapPairs = config.GetAllSwapPair();
             Graph<string, int> graph = new Graph<string, int>();
-            foreach (var pair in SwapPairs) 
+            foreach (var pair in SwapPairs)
             {
                 graph.AddEdge(pair.StartAsset.AssetName, pair.EndAsset.AssetName, 1);
             }
-            Console.WriteLine("Start Asset: ");
-            string startAsset = Console.ReadLine();
-            Console.WriteLine("End Asset: ");
-            string endAsset = Console.ReadLine();
-            LinkedList<LinkedList<Node<string, int>>> results = graph.Search(startAsset, endAsset);
-            foreach (LinkedList<Node<string, int>> path in results) 
+            DirectedGraph.LinkedList<DirectedGraph.LinkedList<Node<string, int>>> results = graph.Search(StartAsset, EndAsset);
+            foreach (DirectedGraph.LinkedList<Node<string, int>> path in results)
             {
                 //对每一条path进行一条rpc查询
-                SystemLink.List<TypeNValue> AssetPath = new SystemLink.List<TypeNValue>();
-                foreach(Node<string, int> Asset in path) 
+                List<TypeNValue> AssetPath = new List<TypeNValue>();
+                List<string> onePath = new List<string>();
+                foreach (Node<string, int> Asset in path)
                 {
+                    var FindedAsset = assetList.Find(T => T.AssetName.Equals(Asset.Value));
+                    onePath.Add(FindedAsset.AssetName);
                     AssetPath.Add(new TypeNValue()
                     {
                         type = "Hash160",
-                        value = assetList.Find( T => T.AssetName.Equals(Asset.Value)).AssetHash
+                        value = FindedAsset.AssetHash
                     });
                 }
                 TypeNValue objs = new TypeNValue()
@@ -44,12 +58,12 @@ namespace BasicClass
                     type = "Array",
                     value = AssetPath.ToArray()
                 };
-                var Lists = new SystemLink.List<TypeNValue>()
+                var Lists = new List<TypeNValue>()
                 {
                     new TypeNValue()
                     {
                         type = "Integer",
-                        value = 100000000
+                        value = amount
                     },
                     objs
                 };
@@ -70,15 +84,23 @@ namespace BasicClass
                 string rawQueryResult = SwapCheck.SwapQuery(queryJson);
                 var queryResult = JsonConvert.DeserializeObject<ResponseParams>(rawQueryResult);
                 TypeNValue[] typeNValues = queryResult.result.stack;
+                if (typeNValues.Length == 0) continue;
                 var result = (typeNValues[typeNValues.Length - 1].ToString());
                 TypeNValue[] assetAmounts = JsonConvert.DeserializeObject<TypeNValue[]>(result);
                 Console.WriteLine("------------------Result----------------------");
-                foreach (TypeNValue assetAmount in assetAmounts) 
+                List<long> onePathAmountsResult = new List<long>();
+                foreach (TypeNValue assetAmount in assetAmounts)
                 {
-                    Console.WriteLine(assetAmount.value);
+                    onePathAmountsResult.Add(long.Parse(assetAmount.value.ToString()));
                 }
+                AssetQuery oneQueryResult = new AssetQuery()
+                {
+                    swapPath = onePath.ToArray(),
+                    amount = onePathAmountsResult.ToArray()
+                };
+                FinalQueryResult.Add(oneQueryResult);
             }
-            Console.ReadLine();
+            return JsonConvert.SerializeObject(FinalQueryResult);
         }
     }
 }
