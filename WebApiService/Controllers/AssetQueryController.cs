@@ -26,6 +26,8 @@ namespace WebAPIService.Controllers
         [HttpPost]
         public string AssetPathQuery(string StartAsset, string EndAsset, int amount)
         {
+            //TODO:封装接口， 添加swth, nash的接口
+            //TODO: 考虑订单簿模式如何兼容
             List<AssetQuery> FinalQueryResult = new List<AssetQuery>();
 
             ConfigReader config = new ConfigReader();
