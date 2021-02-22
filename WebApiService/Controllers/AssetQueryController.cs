@@ -9,6 +9,7 @@ using DirectedGraph;
 using RPCQuery;
 using RPCQuery.RPCHelper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebAPIService.Controllers
 {
@@ -24,6 +25,7 @@ namespace WebAPIService.Controllers
         }
 
         [HttpPost]
+        [EnableCors]
         public string AssetPathQuery(string StartAsset, string EndAsset, int amount)
         {
             //TODO:封装接口， 添加swth, nash的接口

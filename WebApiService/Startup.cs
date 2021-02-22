@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebApiService
 {
@@ -42,7 +43,7 @@ namespace WebApiService
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
+            app.UseCors();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
