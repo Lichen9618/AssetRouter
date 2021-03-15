@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Numerics;
 using Config;
 using DirectedGraph;
 using RPCQuery;
@@ -26,10 +27,15 @@ namespace WebAPIService.Controllers
 
         [HttpPost]
         [EnableCors]
-        public string AssetPathQuery(string StartAsset, string EndAsset, int amount)
+        public string AssetPathQuery(string StartAsset, string EndAsset, string amount)
         {
             //TODO:封装接口， 添加swth, nash的接口
             //TODO: 考虑订单簿模式如何兼容
+            BigInteger number = 0;
+            if (!BigInteger.TryParse(amount, out number)) 
+            {
+                throw new ArgumentException("amount is not bigInteger");
+            }
             List<AssetQuery> FinalQueryResult = new List<AssetQuery>();
 
             ConfigReader config = new ConfigReader();
