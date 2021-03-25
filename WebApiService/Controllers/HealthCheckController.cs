@@ -7,20 +7,20 @@ namespace WebApiService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class HealthCheckController : ControllerBase
     {
-        [HttpPost]
-        [DisableCors]
-        public IEnumerable<string> Get()
+        [HttpGet]
+        [EnableCors]
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return NoContent();
         }
 
         [HttpPost("{id}")]
         [EnableCors]
         public string Get(int id)
         {
-            return "value";
+            return id.ToString();
         }
     }
 }
