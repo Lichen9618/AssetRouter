@@ -40,10 +40,11 @@ namespace WebAPIService.Controllers
 
             ConfigReader config = new ConfigReader();
             var assetList = config.GetAllAsset();
-            var CallContract = config.GetCallContract();
-            var SwapPairs = config.GetAllSwapPair();
+            var callContract = config.GetCallContract();
+            var swapPairs = config.GetAllSwapPair();
+            var allNodes = config.GetAllNodeUrl();
             Graph<string, int> graph = new Graph<string, int>();
-            foreach (var pair in SwapPairs)
+            foreach (var pair in swapPairs)
             {
                 graph.AddEdge(pair.StartAsset.AssetName, pair.EndAsset.AssetName, 1);
             }
@@ -91,7 +92,7 @@ namespace WebAPIService.Controllers
                     id = 3
                 };
                 string queryJson = JsonConvert.SerializeObject(queryParams);
-                string rawQueryResult = SwapCheck.SwapQuery(queryJson);
+                string rawQueryResult = SwapCheck.SwapQuery(queryJson, ConfigReader.GetBestUrl(allNodes));
                 var queryResult = JsonConvert.DeserializeObject<ResponseParams>(rawQueryResult);
                 TypeNValue[] typeNValues = queryResult.result.stack;
                 if (typeNValues.Length == 0) continue;

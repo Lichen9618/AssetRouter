@@ -10,14 +10,17 @@ namespace Config
         XmlDocument AssetConfig;
         XmlDocument ContractConfig;
         XmlDocument SwapPairConfig;
+        XmlDocument NodeConfig;
         public ConfigReader() 
         {
             AssetConfig = new XmlDocument();
             ContractConfig = new XmlDocument();
             SwapPairConfig = new XmlDocument();
+            NodeConfig = new XmlDocument();
             AssetConfig.Load("Asset.xml");
             SwapPairConfig.Load("SwapPair.xml");
             ContractConfig.Load("Contract.xml");
+            NodeConfig.Load("NodeConfig.xml");
         }
 
         public List<Asset> GetAllAsset() 
@@ -65,6 +68,27 @@ namespace Config
                 resultSwapPairs.Add(newPair);
             }
             return resultSwapPairs;
+        }
+
+        public List<string> GetAllNodeUrl() 
+        {
+            XmlNode AllAsset = NodeConfig.SelectSingleNode("AllNodes");
+            XmlNodeList AssetsXML = AllAsset.ChildNodes;
+            List<string> resultNodes = new List<string>();
+            foreach (var assetXML in AssetsXML)
+            {
+                XmlElement assetElement = (XmlElement)assetXML;
+                var assetXmlNodes = assetElement.ChildNodes;
+                string asset = assetXmlNodes.Item(0).InnerText;
+                resultNodes.Add(asset);
+            }
+            return resultNodes;
+        }
+
+        public static string GetBestUrl(List<string> Nodes) 
+        {
+            //TODO: 后期优化节点选择
+            return Nodes[0];
         }
     }
 }

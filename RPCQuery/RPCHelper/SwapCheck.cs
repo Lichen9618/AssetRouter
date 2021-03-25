@@ -7,9 +7,9 @@ namespace RPCQuery.RPCHelper
 {
     public class SwapCheck
     {
-        public static string SwapQuery(string queryJson) 
+        public static string SwapQuery(string queryJson, string url) 
         {
-            var client = new RestClient("https://wallet.ngd.network:10331");
+            var client = new RestClient(url);
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
