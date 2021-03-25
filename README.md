@@ -46,3 +46,9 @@ Response body:
 
 备注： 目前支持的资产已在配置文件中配置完毕， 包括 (nNEO, pnUSDT, pnWBTC, pnUSDT, FLM, pONT SWTH)
 
+## 服务状态检查
+
+检查路由：
+/api/HealthCheck
+
+返回状态值204， 内容为空
