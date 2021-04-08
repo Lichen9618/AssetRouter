@@ -28,4 +28,16 @@
     <AssetName>SWTH</AssetName>
     <AssetHash>3e09e602eeeb401a2fec8e8ea137d59aae54a139</AssetHash>
   </Asset>
+  <Asset>
+    <AssetName>fWETH</AssetName>
+    <AssetHash>179a0db04a130dec6060cd9569d7ee7d7e8eccdc</AssetHash>
+  </Asset>
+  <Asset>
+    <AssetName>fWBTC</AssetName>
+    <AssetHash>36a8f669d55bbfe99a3e9f7953745736bfa5453c</AssetHash>
+  </Asset>
+  <Asset>
+    <AssetName>fUSDT</AssetName>
+    <AssetHash>1aa893170b1babfefba973e9a9183990d792c2a7</AssetHash>
+  </Asset>
 </AllAsset>

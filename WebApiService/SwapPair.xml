@@ -56,4 +56,36 @@
     <Start>nNEO</Start>
     <End>SWTH</End>
   </Pair>
+  <Pair>
+    <Start>fWETH</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>fWETH</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>fUSDT</End>
+  </Pair>
+  <Pair>
+    <Start>fUSDT</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>fWBTC</Start>
+    <End>nNEO</End>
+  </Pair>
+  <Pair>
+    <Start>nNEO</Start>
+    <End>fWBTC</End>
+  </Pair>
+  <Pair>
+    <Start>fUSDT</Start>
+    <End>fWBTC</End>
+  </Pair>
+  <Pair>
+    <Start>fWBTC</Start>
+    <End>fUSDT</End>
+  </Pair>
 </AllPair>

@@ -9,6 +9,7 @@ using DirectedGraph;
 using RPCQuery;
 using RPCQuery.RPCHelper;
 using Newtonsoft.Json;
+using System.Numerics;
 using Lib;
 
 namespace WebAPIService
@@ -16,7 +17,7 @@ namespace WebAPIService
     public class AssetQuery
     {
         public string[] swapPath { get; set; }
-        public long[] amount { get; set; }
+        public BigInteger[] amount { get; set; }
 
         public List<AssetQuery> CheckSwapByFlamingo(string StartAsset, string EndAsset, int amount) 
         {
@@ -80,10 +81,10 @@ namespace WebAPIService
                 if (typeNValues.Length == 0) continue;
                 string result = typeNValues[typeNValues.Length - 1].ToString();
                 TypeNValue[] assetAssetmounts = JsonConvert.DeserializeObject<TypeNValue[]>(result);
-                List<long> onePathAmountsResult = new List<long>();
+                List<BigInteger> onePathAmountsResult = new List<BigInteger>();
                 foreach (TypeNValue assetAmount in assetAssetmounts) 
                 {
-                    onePathAmountsResult.Add(long.Parse(assetAmount.value.ToString()));
+                    onePathAmountsResult.Add(BigInteger.Parse(assetAmount.value.ToString()));
                 }
                 AssetQuery oneQueryResult = new AssetQuery()
                 {
