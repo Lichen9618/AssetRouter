@@ -98,10 +98,10 @@ namespace WebAPIService.Controllers
                 if (typeNValues.Length == 0) continue;
                 var result = (typeNValues[typeNValues.Length - 1].ToString());
                 TypeNValue[] assetAmounts = JsonConvert.DeserializeObject<TypeNValue[]>(result);
-                List<long> onePathAmountsResult = new List<long>();
+                List<BigInteger> onePathAmountsResult = new List<BigInteger>();
                 foreach (TypeNValue assetAmount in assetAmounts)
                 {
-                    onePathAmountsResult.Add(long.Parse(assetAmount.value.ToString()));
+                    onePathAmountsResult.Add(BigInteger.Parse(assetAmount.value.ToString()));
                 }
                 AssetQuery oneQueryResult = new AssetQuery()
                 {
